@@ -13,15 +13,30 @@
 // WiFi handling
 // ----------------------------------------------------------------------------
 
-#define WIFI_CHANNEL 6
+constexpr char WIFI_SSID[] = "your wifi SSID";
+
+int32_t getWiFiChannel(const char *ssid) {
+
+    if (int32_t n = WiFi.scanNetworks()) {
+        for (uint8_t i=0; i<n; i++) {
+            if (!strcmp(ssid, WiFi.SSID(i).c_str())) {
+                return WiFi.channel(i);
+            }
+        }
+    }
+
+    return 0;
+}
 
 void initWiFi() {
 
     WiFi.mode(WIFI_MODE_STA);
 
+    int32_t channel = getWiFiChannel(WIFI_SSID);
+
     // WiFi.printDiag(Serial);
     esp_wifi_set_promiscuous(true);
-    esp_wifi_set_channel(WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
+    esp_wifi_set_channel(channel, WIFI_SECOND_CHAN_NONE);
     esp_wifi_set_promiscuous(false);
     // WiFi.printDiag(Serial);
 }
@@ -57,7 +72,6 @@ void initEspNow() {
 
 void setup() {
     Serial.begin(115200);
-    delay(1000);
 
     initWiFi();
     initEspNow();

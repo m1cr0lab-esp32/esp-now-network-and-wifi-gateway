@@ -18,7 +18,7 @@ This mini-project is therefore intended to illustrate the right way to proceed f
 
 You'll find here the code to be implemented on all ESP-NOW sending nodes, as well as that of the ESP-NOW receiving gateway, which is simultaneously connected to the Internet through a WiFi router.
 
-Note that for this to work, each sender must use the same radio channel as the WiFi router. It is hardcoded in my example (on channel 6), but if your router is configured to automatically switch to the least congested channel, you will need to add a routine to scan the available networks and identify the channel imposed by your router.
+Note that for this to work, each sender must use the same radio channel as the WiFi router. You can hard-code it, but if your router is configured to automatically switch to the least congested channel, it is best to have a routine that scans available networks and looks for the SSID of your router. This way you can easily identify the channel it is using. So I added this routine in the sender's code.
 
 [picture]:    assets/esp-now-gw-wifi-router.jpg
 [tutorial]:   https://randomnerdtutorials.com/esp32-esp-now-wi-fi-web-server/
